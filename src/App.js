@@ -17,14 +17,21 @@ class App extends Component {
     };
   }
 
-  componentDidMount() {
-    this.fetchProducts();
+  async componentDidMount() {
+    await this.fetchProducts();
   }
 
-  fetchProducts = () => {
+  componentWillUnmount() {
+    // fix Warning: Can't perform a React state update on an unmounted component
+    this.setState = (state, callback) => {
+      return;
+    };
+  }
+
+  fetchProducts = async () => {
     this.setState({ loading: true });
 
-    getProducts().then(products => {
+    await getProducts().then(products => {
       this.setState({ loading: false, productItems: products });
     });
   };
