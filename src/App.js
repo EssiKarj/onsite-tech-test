@@ -66,8 +66,18 @@ class App extends Component {
   };
 
   // TODO
-  removeFromBasket = () => {
-    console.log('TODO: Implement');
+  removeFromBasket = id => {
+    //filters the items array by only taking items that does not match id of the removed items
+    const updatedItemsArray = this.state.items.filter(item => item.id !== id)
+
+    //calculates new total with updated items array
+    const updatedTotalPrice = this.calculateTotalPrice(updatedItemsArray)
+
+    //sets state with the updated items array and total price
+    this.setState({
+      items: updatedItemsArray,
+      totalPrice: updatedTotalPrice,
+    })
   };
 
   render() {

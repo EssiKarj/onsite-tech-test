@@ -75,7 +75,7 @@ describe('testing "addToBasket" through click simulation', () => {
   })
 })
 
-xdescribe('testing "removeFromBasket" through click simulation', () => {
+describe('testing "removeFromBasket" through click simulation', () => {
   it('should remove items from a basket when there is  only one item', async () => {
     const wrapper = shallow(<App />)
     const instance = wrapper.instance()
@@ -146,11 +146,10 @@ xdescribe('testing "removeFromBasket" through click simulation', () => {
 
     const removeTshirt = wrapper.find(Basket).first().dive().find('a').at(0)
 
-    console.log(removeTshirt.length)
-
     removeTshirt.simulate('click')
 
     expect(wrapper.state('totalPrice')).toBe(39.90) //checks totalPrice is 39.90 => price of two tshirts
-    expect(wrapper.state('items')).toHaveLength(2) //checks items array has two products after deleting all cufflinks
+    expect(wrapper.state('items')).toHaveLength(1) //checks items array has two products after deleting all cufflinks
+    expect(wrapper.state('items')[0]['quantity']).toBe(2) // checks quantity of remainign product hasn't changed => 2
   })
 })
