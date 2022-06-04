@@ -1,19 +1,39 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react'
 import Product from './components/Product';
 import Basket from './components/Basket';
 import getProducts from './utils/getProducts';
 
 import './App.css';
 
-class App extends Component {
-  constructor(props) {
+//type for items required from mock data
+type ProductItem = {
+  id: number
+  title: string
+  image: string
+  altText: string
+  price: string
+  quantity: number
+}
+
+//type for the state used to track different inputs across the page
+type PageState = {
+  loading: boolean
+  productItems: ProductItem[]
+  items: ProductItem[]
+  totalPrice: string
+}
+
+class App extends React.Component {
+  state: PageState;
+
+  constructor(props: any) {
     super(props);
 
     this.state = {
       loading: false,
       productItems: [],
       items: [],
-      totalPrice: 0,
+      totalPrice: '0',
     };
   }
 
@@ -28,7 +48,7 @@ class App extends Component {
     };
   }
 
-  fetchProducts = async () => {
+  fetchProducts = async (): Promise<void> => {
     this.setState({ loading: true });
 
     await getProducts().then(products => {
@@ -36,18 +56,20 @@ class App extends Component {
     });
   };
 
-  calculateTotalPrice(items) {
+  calculateTotalPrice(items: ProductItem[]): string {
     let total = 0;
 
     items.forEach(item => {
-      total += parseFloat(item.price, 10) * item.quantity;
+      total += parseFloat(item.price) * item.quantity;
     });
 
-    return +total.toFixed(2);
+    return total.toFixed(2);
   }
 
-  addToBasket = id => {
+  addToBasket = (id: number): void => {
     const item = this.state.productItems.find(item => item.id === id);
+    if (!item) return
+
     const newItemsArray = this.state.items.slice();
     const matchingItem = newItemsArray.find(basketItem => basketItem.id === item.id);
 
@@ -65,8 +87,7 @@ class App extends Component {
     });
   };
 
-  // TODO
-  removeFromBasket = id => {
+  removeFromBasket = (id: number): void => {
     //filters the items array by only taking items that does not match id of the removed items
     const updatedItemsArray = this.state.items.filter(item => item.id !== id)
 
