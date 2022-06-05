@@ -1,61 +1,48 @@
-## NOTHS React test
 
-Hi!
+# NOTHS React test
 
-This is a very basic storefront built with [Create React App](https://github.com/facebook/create-react-app).
-
-It features a Product component that can display product information and a Basket component to display what the user has added.
-There's a `getProducts` util that acts like a mock api (no need to worry about this one).
-
-Most of the business logic sits inside the `App.js` file - you've got the state and the button handlers in here.
-There's some intentional ambiguity in here that would be good to clean up...
-While there are tests for the Product component and the Basket component, there are no tests for the App.
-
-The code is functional, to a point - you can add products to your basket but you cannot remove them.
-Nothing happens when you click the `X` next to a product in your basket, we want to remove all products of that type when the `X` is clicked.
-
-Tests use `jest` as the runner with `enzyme` for component rendering/testing.
-
-#
+An app that is built using ReactJS and TypeScript. It uses mock data 
+to display products which can be removed from or added to a basket.
 ## Tasks
 
-1. We want you to implement the `removeFromBasket` function and make sure it's called properly
-2. We want you to write tests for the `App.js` file
-3. (Extra credit) Refactor `App.js`
+The task was to implement the following to an exsiting code.
 
+1. Implement the removeFromBasket function
+2. Write tests for the App.js file
+3. Refactor App.js
+## Process
 
-#
+My approach to this test was to practise test-driven development by writing tests first 
+and writing code to fulfill them. This idea allowed me to think of the needed functionality 
+and performance before writing the code as well as break the task down to more manageable commits.
 
-## Setup
+#### 1. Writing tests for addToBasket
 
-1. Fork this project to your own Github account
-2. Clone that project
-3. Make sure you are running [Node](https://nodejs.org/en/download/) version 12
-4. Run `npm i` (please avoid yarn for this one)
+Since the addToBasket function was already written, I decided to start with writing tests for it to ensure consistency and aim for high test coverage
+where the focus was to test if the function updates the basket correctly as well as returning correct total price.
 
+#### 2. Writing tests for removeFromBasket and implementing the function
 
-## Available Scripts
+To approach testing for removeFromBasket function, I wrote down a small list of features. In this case the function had two main tasks, 
+remove all that type of product from basket and update the total price accordingly. \
+Next, I wrote tests that would start from the easiest test case and move to add more difficulty as they go on:
+- *Basket has one product and a button with removeFromBasket function attached removes the product. Total price is £0.*
+- *Basket has multiple products containing both same and other products. A button with removeFromBasket function attached removes all types of chosen product from the basket. Total price updates to show price of the remaining items.*
 
-In the project directory, you can run:
+With the tests and features in mind, I implemented the removeFromBasket function by using .filter() method to remove products from the array that is used to store information about the contents of the basket. 
+Using this method allowed me to save the filtered array to a variable and use it further to update the state for the basket as well as use it to calculate new total price.
 
-### `npm start`
+#### 3. Refactoring the App.js
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+First thing I wanted to refactor on App.js was to add TypeScript to increase the readability of the code. This allowed me to implement type safety as well as help with further debugging.
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+Next, I decided to transfer the code to a React Functional Component so that it follows modern principles of React and brings it inline with ES6+ standards. 
 
-### `npm test`
+As the last part of my refactoring, I revisited my tests where I was able to abstract repeated blocks of code to reusable functions that allowed me to increase further readibility, follow DRY principle and increase manageability of the code.
+## Additional Notes
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Due to Enzyme not supporting testing or simulating useEffect yet, my choice to refactor App.js to functional React is located in Refactor.tsx file. 
+This way the tests for the class-based React code are available to test without friction.
 
-#
-## Notes
-
-Commit history is important to see how you approach the problem, we'd like to see those in your fork, please do not raise pull requests towards the original repository.
-
-This repository and the code are for testing purposes only so please disregard any security warnings from old node modules, this code will never be used in a live environment.
-
-
+**To run the refactored version**, replace the code from App.tsx with the Refactor.tsx code and rename the component from Refactor to App.\
+===> this code won't pass the tests due to mentioned obstacles.

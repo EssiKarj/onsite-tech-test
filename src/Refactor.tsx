@@ -91,7 +91,6 @@ const Refactor = () => {
     })
   }
 
-
   return (
     <div className="App">
       <div>
@@ -118,4 +117,3 @@ const Refactor = () => {
 }
 
 export default Refactor
-

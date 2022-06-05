@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import Product from './components/Product';
 import Basket from './components/Basket';
 import getProducts from './utils/getProducts';
@@ -43,7 +43,7 @@ class App extends React.Component {
 
   componentWillUnmount() {
     // fix Warning: Can't perform a React state update on an unmounted component
-    this.setState = (state, callback) => {
+    this.setState = (_state, _callback) => {
       return;
     };
   }
